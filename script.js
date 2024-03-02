@@ -1,51 +1,27 @@
-const buttons = document.querySelectorAll('.button')
-const display = document.querySelector('.input')
-let displayValue = ''
-let firstValue = null
-let operator = null
+let input = document.getElementById('inputBox');
+let buttons = document.querySelectorAll('button');
 
-buttons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const value = button.textContent
+let string = "";
+let arr = Array.from(buttons);
+arr.forEach(button => {
+    button.addEventListener('click', (e) =>{
+        if(e.target.innerHTML == '='){
+            string = eval(string);
+            input.value = string;
+        }
 
-    if (!isNaN(value)) {
-      displayValue += value
-      display.value = displayValue
-    } else if (value === '=') {
-      calculate()
-    } else if (value === 'C') {
-      displayValue = ''
-      firstValue = null
-      operator = null
-      display.value = 0
-    } else {
-      firstValue = !firstValue ? +displayValue : firstValue
-      operator = value
-      displayValue = ''
-    }
-  })
+        else if(e.target.innerHTML == 'AC'){
+            string = "";
+            input.value = string;
+        }
+        else if(e.target.innerHTML == 'DEL'){
+            string = string.substring(0, string.length-1);
+            input.value = string;
+        }
+        else{
+            string += e.target.innerHTML;
+            input.value = string;
+        }
+        
+    })
 })
-
-function calculate() {
-  const secondValue = +displayValue
-
-  switch (operator) {
-    case '+':
-      displayValue = firstValue + secondValue
-      break
-    case '-':
-      displayValue = firstValue - secondValue
-      break
-    case '*':
-      displayValue = firstValue * secondValue
-      break
-    case '/':
-      displayValue = firstValue / secondValue
-      break
-  }
-
-  display.value = displayValue.toFixed(2)
-  firstValue = null
-  operator = null
-}
-//adding comment to check git status
