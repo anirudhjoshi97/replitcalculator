@@ -48,3 +48,4 @@ function calculate() {
   firstValue = null
   operator = null
 }
+//adding comment to check git status
